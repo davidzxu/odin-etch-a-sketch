@@ -20,5 +20,5 @@ body {
     background-color: #000;
     width: 1vw;
     height: 1vw;
-    color: aqua;
+    border: solid aqua;
 }
