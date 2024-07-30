@@ -1,10 +1,12 @@
-function createGrid(gridSize) {
+function createGrid(gridSize, width) {
     for (let numColumns = 0; numColumns < gridSize; numColumns++) {
         const columns = document.createElement("div");
         columns.setAttribute("class", "invisible-grid");
         for (let numRows = 0; numRows < gridSize; numRows++) {
             const rows = document.createElement("div");
             rows.setAttribute("class", "default-grid");
+            rows.style.width = width + "vw";
+            rows.style.height = width * 2 + "vh";
             rows.addEventListener("mousemove", () => {
                 rows.removeAttribute("class");
                 rows.setAttribute("class", "new-grid");
@@ -21,14 +23,18 @@ function resetGrid() {
     }
 }
 
+function determineGridWidth(gridSize) {
+    return 32 / gridSize;
+}
+
 const container = document.querySelector(".container");
 const input = document.querySelector("#input");
 let gridSize = 16;
 
-createGrid(gridSize);
+createGrid(gridSize, determineGridWidth(gridSize));
 
 input.addEventListener("input", () => {
     gridSize = input.value;
     resetGrid();
-    createGrid(gridSize);
+    createGrid(gridSize, determineGridWidth(gridSize));
 });
