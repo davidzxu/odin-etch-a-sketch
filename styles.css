@@ -27,12 +27,5 @@ body {
 
 .default-grid {
     display: flex;
-    background-color: aqua;
-    margin: 1px;
-}
-
-.new-grid {
-    display: flex;
-    background-color: red;
     margin: 1px;
 }
