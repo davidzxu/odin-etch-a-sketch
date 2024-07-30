@@ -1,42 +1,29 @@
-function createDefaultGrid(gridSize, width) {
+function createGrid(gridSize, width) {
     for (let numColumns = 0; numColumns < gridSize; numColumns++) {
         const columns = document.createElement("div");
         columns.setAttribute("class", "invisible-grid");
         for (let numRows = 0; numRows < gridSize; numRows++) {
             const rows = document.createElement("div");
             rows.setAttribute("class", "default-grid");
-            rows.style["background-color"] = "aqua";
+            rows.style["background-color"] = "rgb(255,192,203,1)";
             rows.style.width = width + "vw";
             rows.style.height = width * 2 + "vh";
-            rows.addEventListener("mouseenter", () => {
-                rows.style["background-color"] = "red";
-            });
-            columns.appendChild(rows);
-        }
-        container.appendChild(columns);
-    }
-}
-
-function createRandomGrid(gridSize, width) {
-    for (let numColumns = 0; numColumns < gridSize; numColumns++) {
-        const columns = document.createElement("div");
-        columns.setAttribute("class", "invisible-grid");
-        for (let numRows = 0; numRows < gridSize; numRows++) {
-            const rows = document.createElement("div");
-            rows.setAttribute("class", "default-grid");
-            rows.style["background-color"] = "aqua";
-            rows.style.width = width + "vw";
-            rows.style.height = width * 2 + "vh";
-            rows.addEventListener("mouseenter", () => {
-                rows.style["background-color"] =
-                    "rgb(" +
-                    randomRGBValue() +
-                    "," +
-                    randomRGBValue() +
-                    "," +
-                    randomRGBValue() +
-                    ", 1)";
-            });
+            if (modeNum === 1) {
+                rows.addEventListener("mouseenter", () => {
+                    rows.style["background-color"] = "rgb(255,0,0,1)";
+                });
+            } else if (modeNum === 2) {
+                rows.addEventListener("mouseenter", () => {
+                    rows.style["background-color"] =
+                        "rgb(" +
+                        randomRGBValue() +
+                        "," +
+                        randomRGBValue() +
+                        "," +
+                        randomRGBValue() +
+                        ", 1)";
+                });
+            }
             columns.appendChild(rows);
         }
         container.appendChild(columns);
@@ -54,8 +41,10 @@ function createDarkenGrid(gridSize, width) {
             rows.style.width = width + "vw";
             rows.style.height = width * 2 + "vh";
             rows.addEventListener("mouseenter", () => {
+                // Separate RGBA value by commas
                 let opacitySubString =
                     rows.style["background-color"].split(",");
+                // In cases where opacity is 100%
                 if (opacitySubString.length !== 4) {
                     opacityValue = 1;
                 } else {
@@ -75,7 +64,16 @@ function createDarkenGrid(gridSize, width) {
 
 function resetGrid() {
     while (container.firstChild) {
-        container.removeChild(container.lastChild);
+        // alert(container.children[0].style.color);
+        container.removeChild(container.firstChild);
+    }
+}
+
+// Figure out a way to copy the grid
+function copyGrid() {
+    while (container.firstChild) {
+        alert(container.firstChild.style);
+        container.removeChild(container.firstChild);
     }
 }
 
@@ -97,24 +95,27 @@ let modeNum = 1;
 
 randomRGBValue();
 
-createDefaultGrid(gridSize, determineGridWidth(gridSize));
+createGrid(gridSize, determineGridWidth(gridSize));
 
-// Add code to allow gridsize to not default to default mode
+// Add code to allow grid size to not default to default mode
 input.addEventListener("input", () => {
     gridSize = input.value;
     resetGrid();
-    createDefaultGrid(gridSize, determineGridWidth(gridSize));
+    createGrid(gridSize, determineGridWidth(gridSize));
 });
 
 defaultMode.addEventListener("click", () => {
     resetGrid();
-    createDefaultGrid(16, determineGridWidth(16));
+    modeNum = 1;
+    createGrid(gridSize, determineGridWidth(gridSize));
 });
 randomMode.addEventListener("click", () => {
     resetGrid();
-    createRandomGrid(16, determineGridWidth(16));
+    modeNum = 2;
+    createGrid(gridSize, determineGridWidth(gridSize));
 });
 darkenMode.addEventListener("click", () => {
     resetGrid();
-    createDarkenGrid(16, determineGridWidth(16));
+    modeNum = 3;
+    createDarkenGrid(gridSize, determineGridWidth(gridSize));
 });
