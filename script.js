@@ -24,14 +24,7 @@ function createRandomGrid(gridSize, width) {
         for (let numRows = 0; numRows < gridSize; numRows++) {
             const rows = document.createElement("div");
             rows.setAttribute("class", "default-grid");
-            rows.style["background-color"] =
-                "rgb(" +
-                randomRGBValue() +
-                "," +
-                randomRGBValue() +
-                "," +
-                randomRGBValue() +
-                ")";
+            rows.style["background-color"] = "aqua";
             rows.style.width = width + "vw";
             rows.style.height = width * 2 + "vh";
             rows.addEventListener("mouseenter", () => {
@@ -42,7 +35,37 @@ function createRandomGrid(gridSize, width) {
                     randomRGBValue() +
                     "," +
                     randomRGBValue() +
-                    ")";
+                    ", 1)";
+            });
+            columns.appendChild(rows);
+        }
+        container.appendChild(columns);
+    }
+}
+
+function createDarkenGrid(gridSize, width) {
+    for (let numColumns = 0; numColumns < gridSize; numColumns++) {
+        const columns = document.createElement("div");
+        columns.setAttribute("class", "invisible-grid");
+        for (let numRows = 0; numRows < gridSize; numRows++) {
+            const rows = document.createElement("div");
+            rows.setAttribute("class", "default-grid");
+            rows.style["background-color"] = "rgb(255,192,203,1)";
+            rows.style.width = width + "vw";
+            rows.style.height = width * 2 + "vh";
+            rows.addEventListener("mouseenter", () => {
+                let opacitySubString =
+                    rows.style["background-color"].split(",");
+                if (opacitySubString.length !== 4) {
+                    opacityValue = 1;
+                } else {
+                    opacityValue = opacitySubString[3].substring(
+                        0,
+                        opacitySubString[3].length - 1
+                    );
+                }
+                rows.style["background-color"] =
+                    "rgb(255,192,203," + (opacityValue - 0.1) + ")";
             });
             columns.appendChild(rows);
         }
@@ -93,4 +116,5 @@ randomMode.addEventListener("click", () => {
 });
 darkenMode.addEventListener("click", () => {
     resetGrid();
+    createDarkenGrid(16, determineGridWidth(16));
 });
