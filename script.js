@@ -1,7 +1,4 @@
 function createGrid(gridSize, width) {
-    let gridColor = "rgb(255,192,203,1)";
-    let newGridColor = "rgb(255,0,0,1)";
-    let rgbaArray = newGridColor.split(",");
     rInput.setAttribute("value", rgbaArray[0].replace(/\D/g, ""));
     gInput.setAttribute("value", rgbaArray[1]);
     bInput.setAttribute("value", rgbaArray[2]);
@@ -26,7 +23,7 @@ function createGrid(gridSize, width) {
                     "," +
                     oInput.value / 100 +
                     ")";
-                enableButtons();
+                toggleFields();
                 defaultMode.disabled = true;
                 rInput.disabled = false;
                 gInput.disabled = false;
@@ -50,7 +47,7 @@ function createGrid(gridSize, width) {
                 };
             });
             randomMode.addEventListener("click", () => {
-                enableButtons();
+                toggleFields();
                 randomMode.disabled = true;
                 rows.onmouseenter = () => {
                     newGridColor =
@@ -66,7 +63,7 @@ function createGrid(gridSize, width) {
             });
             darkenMode.addEventListener("click", () => {
                 let numOfHovers = 0;
-                enableButtons();
+                toggleFields();
                 darkenMode.disabled = true;
                 rows.onmouseenter = () => {
                     numOfHovers++;
@@ -76,7 +73,7 @@ function createGrid(gridSize, width) {
             columns.appendChild(rows);
         }
         container.appendChild(columns);
-        enableButtons();
+        toggleFields();
         if (currentMode === 3) {
             darkenMode.click();
         } else if (currentMode === 2) {
@@ -101,7 +98,7 @@ function randomRGBValue() {
     return Math.floor(Math.random() * 256);
 }
 
-function enableButtons() {
+function toggleFields() {
     defaultMode.disabled = false;
     randomMode.disabled = false;
     darkenMode.disabled = false;
@@ -127,6 +124,9 @@ const darkenMode = document.querySelector(".darken");
 const reset = document.querySelector(".reset");
 let gridSize = 16;
 let currentMode = null;
+let gridColor = "rgb(255,192,203,1)";
+let newGridColor = "rgb(255,0,0,1)";
+let rgbaArray = newGridColor.split(",");
 
 createGrid(gridSize, determineGridWidth(gridSize));
 
@@ -141,14 +141,6 @@ reset.addEventListener("click", () => {
     createGrid(gridSize, determineGridWidth(gridSize));
 });
 
-defaultMode.addEventListener("click", () => {
-    currentMode = 1;
-});
-
-randomMode.addEventListener("click", () => {
-    currentMode = 2;
-});
-
-darkenMode.addEventListener("click", () => {
-    currentMode = 3;
-});
+defaultMode.addEventListener("click", () => (currentMode = 1));
+randomMode.addEventListener("click", () => (currentMode = 2));
+darkenMode.addEventListener("click", () => (currentMode = 3));
