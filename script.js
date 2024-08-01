@@ -1,5 +1,6 @@
 function createGrid(gridSize, width) {
     let gridColor = "rgb(255,192,203,1)";
+    let newGridColor = "rgb(255,0,0,1)";
     let rgbaArray = newGridColor.split(",");
     rInput.setAttribute("value", rgbaArray[0].replace(/\D/g, ""));
     gInput.setAttribute("value", rgbaArray[1]);
@@ -15,6 +16,16 @@ function createGrid(gridSize, width) {
             rows.style.width = width + "vw";
             rows.style.height = width * 2 + "vh";
             defaultMode.addEventListener("click", () => {
+                newGridColor =
+                    "rgb(" +
+                    rInput.value +
+                    "," +
+                    gInput.value +
+                    "," +
+                    bInput.value +
+                    "," +
+                    oInput.value / 100 +
+                    ")";
                 enableButtons();
                 defaultMode.disabled = true;
                 rInput.disabled = false;
@@ -116,7 +127,6 @@ const darkenMode = document.querySelector(".darken");
 const reset = document.querySelector(".reset");
 let gridSize = 16;
 let currentMode = null;
-let newGridColor = "rgb(255,0,0,1)";
 
 createGrid(gridSize, determineGridWidth(gridSize));
 
