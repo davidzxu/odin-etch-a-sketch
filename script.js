@@ -78,6 +78,7 @@ function enableButtons() {
 
 const container = document.querySelector(".container");
 const input = document.querySelector("#input");
+const resize = document.querySelector(".resize");
 const defaultContainer = document.querySelector(".default-container");
 const defaultMode = document.querySelector(".default");
 const randomMode = document.querySelector(".random");
@@ -91,7 +92,7 @@ defaultContainer.appendChild(additionalInput);
 
 createGrid(gridSize, determineGridWidth(gridSize));
 
-input.addEventListener("input", () => {
+resize.addEventListener("click", () => {
     gridSize = input.value;
     resetGrid();
     createGrid(gridSize, determineGridWidth(gridSize));
