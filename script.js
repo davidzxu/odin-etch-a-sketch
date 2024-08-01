@@ -12,6 +12,8 @@ function createGrid(gridSize, width) {
             rows.style.height = width * 2 + "vh";
             defaultMode.addEventListener("click", () => {
                 newGridColor = "rgb(255,0,0,1)";
+                enableButtons();
+                defaultMode.disabled = true;
                 rows.onmouseenter = () => {
                     rows.style["background-color"] = newGridColor;
                 };
@@ -25,12 +27,16 @@ function createGrid(gridSize, width) {
                     "," +
                     randomRGBValue() +
                     ", 1)";
+                enableButtons();
+                randomMode.disabled = true;
                 rows.onmouseenter = () => {
                     rows.style["background-color"] = newGridColor;
                 };
             });
             darkenMode.addEventListener("click", () => {
                 let numOfHovers = 0;
+                enableButtons();
+                darkenMode.disabled = true;
                 rows.onmouseenter = () => {
                     numOfHovers++;
                     rows.style.opacity = 1 - numOfHovers / 5;
@@ -39,6 +45,7 @@ function createGrid(gridSize, width) {
             columns.appendChild(rows);
         }
         container.appendChild(columns);
+        enableButtons();
         if (currentMode === 3) {
             darkenMode.click();
         } else if (currentMode === 2) {
@@ -63,6 +70,12 @@ function randomRGBValue() {
     return Math.floor(Math.random() * 256);
 }
 
+function enableButtons() {
+    defaultMode.disabled = false;
+    randomMode.disabled = false;
+    darkenMode.disabled = false;
+}
+
 const container = document.querySelector(".container");
 const input = document.querySelector("#input");
 const defaultContainer = document.querySelector(".default-container");
@@ -72,6 +85,9 @@ const darkenMode = document.querySelector(".darken");
 const reset = document.querySelector(".reset");
 let gridSize = 16;
 let currentMode = null;
+
+const additionalInput = document.createElement("input");
+defaultContainer.appendChild(additionalInput);
 
 createGrid(gridSize, determineGridWidth(gridSize));
 
