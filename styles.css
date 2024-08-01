@@ -25,7 +25,7 @@ body {
     background-color: black;
 }
 
-.default-grid {
+.original-grid {
     display: flex;
     margin: 1px;
 }
